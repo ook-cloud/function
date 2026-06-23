@@ -281,6 +281,7 @@ console.log(minOfThree(5, 9, 9));
 // Write `countUp(n)` that RETURNS "1 2 3 ... n" — the numbers 1..n joined by single spaces.
 // Hint: result = ""; loop i = 1..n, add i (and a space) each turn; trim the trailing space at the end
 //       OR add a space BEFORE every number except the first.
+
 function countUp(n) {
   let result = "";
   for (i = 1; i <= n; ++i) {
@@ -296,18 +297,34 @@ console.log(countUp(5));
 // ----- L2. Count down with a while loop -----
 // Write `countDown(n)` that RETURNS "n n-1 ... 1 Go!" using a WHILE loop (not for).
 // Hint: let i = n; while (i >= 1) { ...; i--; } then add "Go!".
-// your code here
 
-// console.log(countDown(3));
+function countDown(n) {
+  let result = " ";
+  let i = n;
+  while (i >= 1) {
+    result += i + " ";
+    i--;
+  }
+  return result + "Go!";
+}
+
+console.log(countDown(3));
 // TEST 1:  countDown(3)  ->  "3 2 1 Go!"
 // TEST 2:  countDown(1)  ->  "1 Go!"
 // TEST 3:  countDown(5)  ->  "5 4 3 2 1 Go!"
 
 // ----- L3. Sum a range -----
 // Write `sumRange(a, b)` that RETURNS a + (a+1) + ... + b. Assume a <= b. Loop inside.
-// your code here
 
-// console.log(sumRange(3, 6));
+function sumRange(a, b) {
+  let sum = 0;
+  for (let i = a; i <= b; i++) {
+    sum = sum + i;
+  }
+  return sum;
+}
+console.log("----l3----");
+console.log(sumRange(3, 6));
 // TEST 1:  sumRange(3, 6)   ->  18    (3 + 4 + 5 + 6)
 // TEST 2:  sumRange(1, 5)   ->  15
 // TEST 3:  sumRange(4, 4)   ->  4
@@ -315,9 +332,16 @@ console.log(countUp(5));
 // ----- L4. Repeat a string -----
 // Write `repeatStr(word, times)` that RETURNS word stuck together `times` times. Loop inside.
 // Hint: result = ""; loop `times` -> result = result + word.  (Do NOT use word.repeat — build it.)
-// your code here
 
-// console.log(repeatStr("ab", 3));
+function repeatStr(word, times) {
+  let result = "";
+
+  for (i = 1; i <= times; i++) result = result + word;
+  return result;
+}
+console.log("-----l4-----");
+console.log(repeatStr("ab", 3));
+
 // TEST 1:  repeatStr("ab", 3)  ->  "ababab"
 // TEST 2:  repeatStr("x", 5)   ->  "xxxxx"
 // TEST 3:  repeatStr("hi", 1)  ->  "hi"
@@ -325,9 +349,16 @@ console.log(countUp(5));
 // ----- L5. Count multiples in a range -----
 // Write `countMultiples(n, k)` that RETURNS how many numbers from 1..n divide evenly by k.
 // Hint: loop 1..n, if (i % k === 0) count++.
-// your code here
-
-// console.log(countMultiples(50, 3));
+function countMultiples(n, k) {
+  let count = 0;
+  for (i = 1; i <= n; i++) {
+    if (i % k === 0) {
+      count++;
+    }
+  }
+  return count;
+}
+console.log(countMultiples(50, 3));
 // TEST 1:  countMultiples(50, 3)  ->  16
 // TEST 2:  countMultiples(10, 5)  ->  2
 // TEST 3:  countMultiples(2, 3)   ->  0
@@ -339,18 +370,30 @@ console.log(countUp(5));
 
 // ----- 17. Sum 1 to n -----
 // Write `sumTo(n)` that RETURNS 1 + 2 + ... + n. Use a loop inside.
-// your code here
-
-// console.log(sumTo(100));
+function sumTo(n) {
+  let sum = 0;
+  for (i = 1; i <= n; i++) {
+    sum += i;
+  }
+  return sum;
+}
+console.log(sumTo(100));
 // TEST 1:  sumTo(100)  ->  5050
 // TEST 2:  sumTo(10)   ->  55
 // TEST 3:  sumTo(1)    ->  1
 
 // ----- 18. Factorial -----
 // Write `factorial(n)` that RETURNS 1 * 2 * ... * n (factorial(0) is 1).
-// your code here
 
-// console.log(factorial(5));
+function factorial(n) {
+  let result = 1;
+  for (i = 1; i <= n; i++) {
+    result *= i;
+  }
+  return result;
+}
+console.log(factorial(5));
+
 // TEST 1:  factorial(5)  ->  120
 // TEST 2:  factorial(3)  ->  6
 // TEST 3:  factorial(0)  ->  1
@@ -358,9 +401,19 @@ console.log(countUp(5));
 // ----- 19. Count vowels -----
 // Write `countVowels(word)` that RETURNS how many vowels (a,e,i,o,u) are in a lowercase word.
 // Hint: loop the chars; "aeiou".includes(word[i]).
-// your code here
+function countVowels(word) {
+  let count = 0;
+  const vowels = "aeiou";
 
-// console.log(countVowels("javascript"));
+  for (let i = 0; i < word.length; i++) {
+    if (vowels.includes(word[i])) {
+      count++;
+    }
+  }
+  return count;
+}
+console.log(countVowels("javascript"));
+
 // TEST 1:  countVowels("javascript")  ->  3
 // TEST 2:  countVowels("aeiou")       ->  5
 // TEST 3:  countVowels("xyz")         ->  0
@@ -368,9 +421,16 @@ console.log(countUp(5));
 // ----- 20. Reverse a string -----
 // Write `reverse(word)` that RETURNS the word backwards.
 // Hint: result = ""; loop and do result = word[i] + result.
-// your code here
 
-// console.log(reverse("code"));
+function reverse(word) {
+  let reversed = "";
+  for (let i = word.length - 1; i >= 0; i--) {
+    reversed += word[i];
+  }
+  return reversed;
+}
+console.log(reverse("code"));
+
 // TEST 1:  reverse("code")  ->  "edoc"
 // TEST 2:  reverse("abc")   ->  "cba"
 // TEST 3:  reverse("x")     ->  "x"
@@ -383,9 +443,14 @@ console.log(countUp(5));
 // ----- 21. Quadruple (reuse double) -----
 // Write `quadruple(n)` that RETURNS n times 4 BY CALLING `double` twice.
 // Hint: return double(double(n)).
-// your code here
 
-// console.log(quadruple(3));
+function double(n) {
+  return n * 2;
+}
+function quadruple(n) {
+  return double(double(n));
+}
+console.log(quadruple(3));
 // TEST 1:  quadruple(3)  ->  12
 // TEST 2:  quadruple(0)  ->  0
 // TEST 3:  quadruple(5)  ->  20
@@ -393,9 +458,17 @@ console.log(countUp(5));
 // ----- 22. Sum of squares (reuse square) -----
 // Write `sumOfSquares(n)` that RETURNS square(1) + square(2) + ... + square(n).
 // Call your `square` from exercise 5 inside the loop.
-// your code here
 
-// console.log(sumOfSquares(3));
+function sumOfSquares(n) {
+  let square = 0;
+  for (i = 1; i <= n; i++) {
+    console.log(i, "i");
+    square += i * i;
+    console.log(square, "squaresquare");
+  }
+  return square;
+}
+console.log(sumOfSquares(3));
 // TEST 1:  sumOfSquares(3)  ->  14    (1 + 4 + 9)
 // TEST 2:  sumOfSquares(1)  ->  1
 // TEST 3:  sumOfSquares(5)  ->  55    (1 + 4 + 9 + 16 + 25)
@@ -403,9 +476,10 @@ console.log(countUp(5));
 // ----- 23. Both even? (reuse isEven) -----
 // Write `bothEven(a, b)` that RETURNS true only if a AND b are both even.
 // Call your `isEven` from exercise 6.
-// your code here
-
-// console.log(bothEven(4, 8));
+function bothEven(a, b) {
+  return a % 2 === 0 && b % 2 === 0;
+}
+console.log(bothEven(4, 8));
 // TEST 1:  bothEven(4, 8)  ->  true
 // TEST 2:  bothEven(4, 7)  ->  false
 // TEST 3:  bothEven(3, 9)  ->  false
@@ -419,9 +493,19 @@ console.log(countUp(5));
 // ----- E1. Sum of Digits -----
 // Write `sumDigits(n)` that RETURNS the sum of the digits of a non-negative integer.
 // Hint: while n > 0 -> add (n % 10) to a total, then n = Math.floor(n / 10).
-// your code here
 
-// console.log(sumDigits(4825));
+function sumDigits(n) {
+  let sum = 0;
+
+  while (n > 0) {
+    sum += n % 10; // Get the last digit
+    n = Math.floor(n / 10); // Remove the last digit
+  }
+
+  return sum;
+}
+console.log(sumDigits(4825));
+
 // EXAMPLE 1:  sumDigits(4825)  ->  19     (4 + 8 + 2 + 5)
 // EXAMPLE 2:  sumDigits(60)    ->  6      (6 + 0)
 // EXAMPLE 3:  sumDigits(7)     ->  7
@@ -430,9 +514,16 @@ console.log(countUp(5));
 // Write `power(base, exp)` that RETURNS base raised to exp, for exp >= 0.
 // Hint: result = 1; loop `exp` times -> result = result * base.  (Do NOT use ** or Math.pow.)
 // Note: power(anything, 0) is 1.
-// your code here
 
-// console.log(power(2, 5));
+function power(base, exp) {
+  let result = 1;
+  for (let i = 0; i < exp; i++) {
+    result *= base;
+  }
+  return result;
+}
+console.log(power(2, 5));
+
 // EXAMPLE 1:  power(2, 5)  ->  32    (2×2×2×2×2)
 // EXAMPLE 2:  power(5, 0)  ->  1     (anything to the 0 is 1)
 // EXAMPLE 3:  power(3, 3)  ->  27
@@ -442,9 +533,24 @@ console.log(countUp(5));
 // non-negative integer. Peel digits with % 10 and Math.floor(/10) while
 // tracking BOTH a running max and a running min.
 // Hint: start hi = 0, lo = 9; for each digit d -> if (d > hi) hi = d; if (d < lo) lo = d.
-// your code here
 
-// console.log(digitSpread(364));
+function digitSpread(n) {
+  let high = 0;
+  let low = 9;
+  while (n > 0) {
+    let d = n % 10;
+    if (d > high) {
+      high = d;
+    }
+    if (d < low) {
+      low = d;
+    }
+    n = Math.floor(n / 10);
+  }
+  return high - low;
+}
+console.log(digitSpread(364));
+
 // EXAMPLE 1:  digitSpread(364)  ->  3    (max 6, min 3)
 // EXAMPLE 2:  digitSpread(70)   ->  7    (max 7, min 0)
 // EXAMPLE 3:  digitSpread(5)    ->  0    (one digit: max == min)
@@ -452,9 +558,18 @@ console.log(countUp(5));
 // ----- E4. Reverse a Number (positive only) -----
 // Write `reverseNumber(n)` that RETURNS a positive integer's digits reversed.
 // Hint: result = 0; while n > 0 -> result = result * 10 + (n % 10), n = Math.floor(n/10).
-// your code here
 
-// console.log(reverseNumber(4071));
+function reverseNumber(n) {
+  let reversed = 0;
+  while (n > 0) {
+    let lastDigit = n % 10;
+    reversed = reversed * 10 + lastDigit; // Shift left and add the digit
+    n = Math.floor(n / 10);
+  }
+  return reversed;
+}
+console.log(reverseNumber(4071));
+
 // EXAMPLE 1:  reverseNumber(4071)  ->  1704
 // EXAMPLE 2:  reverseNumber(90)    ->  9     (09, leading zero drops)
 // EXAMPLE 3:  reverseNumber(6)     ->  6
@@ -463,9 +578,20 @@ console.log(countUp(5));
 // Write `isPowerOf(n, base)` -> true if positive n is base^0, base^1, base^2, ...
 // (so 1, base, base*base, ...), else false. base is >= 2.
 // Hint: while n % base === 0 -> n = n / base; it is a power of base if you end at exactly 1.
-// your code here
 
-// console.log(isPowerOf(27, 3));
+function isPowerOf(n, base) {
+  while (n % base === 0) {
+    n = n / base;
+  }
+
+  if (n === 1) {
+    return true;
+  } else {
+    return false;
+  }
+}
+console.log(isPowerOf(27, 3));
+
 // EXAMPLE 1:  isPowerOf(27, 3)  ->  true    (3×3×3)
 // EXAMPLE 2:  isPowerOf(1, 5)   ->  true    (base^0 = 1)
 // EXAMPLE 3:  isPowerOf(12, 2)  ->  false   (12 = 2×2×3, the 3 ruins it)
