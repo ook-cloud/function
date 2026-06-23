@@ -594,3 +594,4 @@ console.log(countUp(5));
    All 3 tests match for an exercise = you got it right.
    Any mismatch = a bug to hunt. Happy functioning!
    ============================================================ */
+// Nothing here
