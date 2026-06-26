@@ -702,9 +702,19 @@ console.log(collatzSteps(6));
 // Write `fizzAt(i)` that RETURNS, for a single number i:
 //   "FizzBuzz" if divisible by 3 and 5, "Fizz" if by 3, "Buzz" if by 5, else String(i).
 
-function fizzAt(i) {}
+function fizzAt(i) {
+    if (i % 3 === 0 && i % 5 === 0) {
+        return "FizzBuzz";
+    } else if (i % 3 === 0) {
+        return "Fizz";
+    } else if (i % 5 === 0) {
+        return "Buzz";
+    } else {
+        return String(i);
+    }
+}
+console.log(fizzAt(15));
 
-// console.log(fizzAt(15));
 // EXAMPLE 1:  fizzAt(15)  ->  "FizzBuzz"
 // EXAMPLE 2:  fizzAt(9)   ->  "Fizz"
 // EXAMPLE 3:  fizzAt(7)   ->  "7"
@@ -713,9 +723,14 @@ function fizzAt(i) {}
 // A Harshad number is divisible by the SUM of its own digits.
 // Write `isHarshad(n)` and CALL sumDigits(n) from E1 — do NOT re-sum the digits here.
 // Hint: return n % sumDigits(n) === 0;
-// your code here
+function isHarshad(n) {
+const digitSum = sumDigits(n);
 
-// console.log(isHarshad(18));
+    if (digitSum === 0) return false; 
+    return n % digitSum === 0;
+}
+console.log(isHarshad(18));
+
 // EXAMPLE 1:  isHarshad(18)  ->  true    (1+8=9, and 18 % 9 === 0)
 // EXAMPLE 2:  isHarshad(11)  ->  false   (1+1=2, and 11 % 2 !== 0)
 // EXAMPLE 3:  isHarshad(21)  ->  true    (2+1=3, and 21 % 3 === 0)
@@ -724,9 +739,12 @@ function fizzAt(i) {}
 // Write `isPalindrome(n)` -> true if a non-negative integer reads the same both ways.
 // Do NOT re-derive the reverse here — CALL reverseNumber(n) from E4 and compare to n.
 // Hint: return reverseNumber(n) === n;
-// your code here
 
-// console.log(isPalindrome(1331));
+function isPalindrome(n) {
+  return n === reverseNumber(n);
+}
+console.log(isPalindrome(1331));
+
 // EXAMPLE 1:  isPalindrome(1331)  ->  true
 // EXAMPLE 2:  isPalindrome(1234)  ->  false
 // EXAMPLE 3:  isPalindrome(8)     ->  true
@@ -735,9 +753,17 @@ function fizzAt(i) {}
 // Write `gcd(a, b)` -> the biggest number that divides BOTH a and b evenly.
 // Hint (easy way): loop i from 1 up to the smaller of a and b; whenever i divides
 //   both a and b, remember it; the LAST such i is the answer.
-// your code here
 
-// console.log(gcd(12, 8));
+function gcd(a, b) {
+    while (b !== 0) {
+        let remainder = a % b;
+        a = b; 
+        b = remainder;
+    }
+    return a;
+}
+console.log(gcd(12, 8));
+
 // EXAMPLE 1:  gcd(12, 8)   ->  4    (1,2,4 divide both; 4 is biggest)
 // EXAMPLE 2:  gcd(7, 5)    ->  1    (only 1 divides both)
 // EXAMPLE 3:  gcd(9, 9)    ->  9
@@ -746,9 +772,15 @@ function fizzAt(i) {}
 // Keep summing the digits until only ONE digit is left, then RETURN it.
 // Write `digitalRoot(n)` and CALL `sumDigits(n)` (from E1) inside a loop.
 // Hint: while n has more than one digit (n >= 10) -> n = sumDigits(n); return n.
-// your code here
 
-// console.log(digitalRoot(942));
+function digitalRoot(n) {
+    while (n > 9) {
+        n = sumDigits(n);
+    }
+    return n;
+}
+console.log(digitalRoot(19900403));
+
 // EXAMPLE 1:  digitalRoot(942)  ->  6    (9+4+2=15, then 1+5=6)
 // EXAMPLE 2:  digitalRoot(38)   ->  2    (3+8=11, then 1+1=2)
 // EXAMPLE 3:  digitalRoot(5)    ->  5    (already one digit)
@@ -760,9 +792,15 @@ function fizzAt(i) {}
 // ----- Countdown string -----
 // Write `countdown(n)` that RETURNS "n n-1 ... 1 Go!" as one string with single spaces.
 // You may use a loop OR call countdown(n-1) inside itself (recursion). Either is fine.
-// your code here
 
-// console.log(countdown(3));
+function countdown(n) {
+    if (n < 1) {
+        return "Go!";
+    }
+    return n + " " + countdown(n - 1);
+}
+console.log(countdown(3));
+
 // TEST 1:  countdown(3)  ->  "3 2 1 Go!"
 // TEST 2:  countdown(1)  ->  "1 Go!"
 // TEST 3:  countdown(5)  ->  "5 4 3 2 1 Go!"
@@ -835,18 +873,25 @@ function fizzAt(i) {}
 
 // ----- 1. Build an object -----
 // Write `makeUser()` that takes NO input and RETURNS the object { name: "Sam", age: 20 }.
-// your code here
 
-// console.log(makeUser());
+const makeUser = () => ({ name: "Sam", age: 20 });
+console.log(makeUser().name);
+console.log(makeUser().age);
+console.log(typeof makeUser());
+
 // TEST 1:  makeUser().name      ->  "Sam"
 // TEST 2:  makeUser().age       ->  20
 // TEST 3:  typeof makeUser()    ->  "object"
 
 // ----- 2. Read with a dot -----
 // Write `getName(user)` that RETURNS the `name` property of the object passed in.
-// your code here
 
-// console.log(getName({ name: "Ada", age: 30 }));
+function getName(user) {
+    return user.name;
+}
+console.log(getName({ name: "Ada", age: 30 }));
+console.log(getName({ name: "Bo" }));
+console.log(getName({ name: " " }));
 // TEST 1:  getName({ name: "Ada", age: 30 })  ->  "Ada"
 // TEST 2:  getName({ name: "Bo" })            ->  "Bo"
 // TEST 3:  getName({ name: "" })              ->  ""
@@ -854,9 +899,13 @@ function fizzAt(i) {}
 // ----- 3. Read with a variable key (bracket) -----
 // Write `getValue(obj, key)` that RETURNS the value behind `key`. The key is in a
 // variable, so you MUST use bracket access obj[key] (dot would look for "key" literally).
-// your code here
+function getValue(obj, key) {
+    return obj[key];
+}
+console.log(getValue({ a: 1, b: 2 }, "b"));
+console.log(getValue({ color: "red" }, "color"));
+console.log(getValue({ a: 1 }, "missing"));
 
-// console.log(getValue({ a: 1, b: 2 }, "b"));
 // TEST 1:  getValue({ a: 1, b: 2 }, "b")        ->  2
 // TEST 2:  getValue({ color: "red" }, "color")  ->  "red"
 // TEST 3:  getValue({ a: 1 }, "missing")        ->  undefined
@@ -867,9 +916,14 @@ function fizzAt(i) {}
 
 // ----- 4. Update a property -----
 // Write `setAge(user, newAge)` that sets user.age to newAge and RETURNS the same user.
-// your code here
+function setAge(user, newAge) {
+    user.age = newAge;
+    return user;
+}
+console.log(setAge({ name: "Sam", age: 20 }, 21).age);
+console.log(setAge({ name: "Sam", age: 20 }, 21).name);
+console.log(setAge({ age: 5 }, 0).age);
 
-// console.log(setAge({ name: "Sam", age: 20 }, 21));
 // TEST 1:  setAge({ name: "Sam", age: 20 }, 21).age  ->  21
 // TEST 2:  setAge({ name: "Sam", age: 20 }, 21).name ->  "Sam"   (other keys untouched)
 // TEST 3:  setAge({ age: 5 }, 0).age                 ->  0
