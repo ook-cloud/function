@@ -460,11 +460,9 @@ console.log(quadruple(3));
 // Call your `square` from exercise 5 inside the loop.
 
 function sumOfSquares(n) {
-  let square = 0;
+  square = 0;
   for (i = 1; i <= n; i++) {
-    console.log(i, "i");
     square += i * i;
-    console.log(square, "squaresquare");
   }
   return square;
 }
@@ -600,9 +598,17 @@ console.log(isPowerOf(27, 3));
 // Write `toBinary(n)` -> the binary form of a positive integer, AS A STRING.
 // Same peeling as bit-counting, but instead of counting the 1s you PREPEND each bit.
 // Hint: result = ""; while n > 0 -> result = (n % 2) + result, then n = Math.floor(n / 2).
-// your code here
 
-// console.log(toBinary(11));
+function toBinary(n) {
+  result = "";
+  while (n > 0) {
+    result = (n % 2) + result;
+    n = Math.floor(n / 2);
+  }
+  return result;
+}
+
+console.log(toBinary(11));
 // EXAMPLE 1:  toBinary(11)  ->  "1011"
 // EXAMPLE 2:  toBinary(8)   ->  "1000"
 // EXAMPLE 3:  toBinary(1)   ->  "1"
@@ -610,9 +616,15 @@ console.log(isPowerOf(27, 3));
 // ----- E7. Sqrt(x) — integer part  (LeetCode 69) -----
 // Write `mySqrt(n)` -> the integer part of the square root of a non-negative integer.
 // Hint: loop i = 1 upward while i * i <= n; the answer is the last i that fit.
-// your code here
 
-// console.log(mySqrt(26));
+function mySqrt(n) {
+  i = 1;
+  while (i * i <= n) {
+    i++;
+  }
+  return i - 1;
+}
+console.log(mySqrt(37));
 // EXAMPLE 1:  mySqrt(26)  ->  5    (5²=25 ≤ 26, 6²=36 > 26)
 // EXAMPLE 2:  mySqrt(49)  ->  7
 // EXAMPLE 3:  mySqrt(2)   ->  1    (1²=1 ≤ 2, 2²=4 > 2)
@@ -620,9 +632,24 @@ console.log(isPowerOf(27, 3));
 // ----- E8. Valid Perfect Square  (LeetCode 367) -----
 // Write `isPerfectSquare(n)` -> true if a positive integer is a perfect square, else false.
 // Hint: loop i = 1 upward; if i*i === n -> true; if i*i > n -> false, stop.
-// your code here
 
-// console.log(isPerfectSquare(81));
+function isPerfectSquare(n) {
+  let isPerfect = false;
+  for (i = 1; i <= n; i++) {
+    console.log(i);
+    if (i * i === n) {
+      console.log("this is true");
+      isPerfect = true;
+      break;
+    } else if (i * i > n) {
+      isPerfect = false;
+      break;
+    }
+  }
+  return isPerfect;
+}
+
+console.log(isPerfectSquare(80));
 // EXAMPLE 1:  isPerfectSquare(81)   ->  true   (9×9)
 // EXAMPLE 2:  isPerfectSquare(50)   ->  false
 // EXAMPLE 3:  isPerfectSquare(100)  ->  true   (10×10)
@@ -631,9 +658,19 @@ console.log(isPowerOf(27, 3));
 // Write `countDivisors(n)` -> how many positive whole numbers divide n evenly
 // (counting both 1 and n itself), for n >= 1.
 // Hint: count = 0; loop i = 1..n; if (n % i === 0) count++.
-// your code here
 
-// console.log(countDivisors(12));
+function countDivisors(n) {
+  let count = 0;
+  for (i = 1; i <= n; i++) {
+    if (n % i === 0) {
+      count++;
+    }
+  }
+
+  return count;
+}
+console.log(countDivisors(12));
+
 // EXAMPLE 1:  countDivisors(12)  ->  6    (1, 2, 3, 4, 6, 12)
 // EXAMPLE 2:  countDivisors(7)   ->  2    (1, 7 — a prime has exactly 2)
 // EXAMPLE 3:  countDivisors(1)   ->  1    (just 1)
@@ -641,9 +678,22 @@ console.log(isPowerOf(27, 3));
 // ----- E10. Collatz Steps  (the famous 3n+1 problem) -----
 // Write `collatzSteps(n)` -> how many steps a positive integer takes to reach 1.
 // Each step: even -> n / 2, odd -> 3 * n + 1. Count steps until n is exactly 1.
-// your code here
 
-// console.log(collatzSteps(6));
+function collatzSteps(n) {
+  let steps;
+  while (n > 1) {
+    if (n % 2 === 0) {
+      n = n / 2;
+    } else {
+      n = 3 * n + 1;
+    }
+    steps++;
+  }
+
+  return steps;
+}
+console.log(collatzSteps(6));
+
 // EXAMPLE 1:  collatzSteps(6)  ->  8    (6→3→10→5→16→8→4→2→1)
 // EXAMPLE 2:  collatzSteps(1)  ->  0    (already 1, no steps)
 // EXAMPLE 3:  collatzSteps(7)  ->  16
