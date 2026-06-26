@@ -931,9 +931,15 @@ console.log(setAge({ age: 5 }, 0).age);
 // ----- 5. Add a property with a variable key -----
 // Write `addField(obj, key, value)` that adds key = value to obj and RETURNS obj.
 // Use bracket set: obj[key] = value.
-// your code here
 
-// console.log(addField({ name: "Sam" }, "age", 20));
+function addField(obj, key, value) {
+    obj[key] = value;
+    return obj;
+}
+console.log(addField({ name: "Sam" }, "age", 20).age);
+console.log(addField({}, "X", 5).X);
+console.log(addField({ a:1 }, "a", 9).a);
+
 // TEST 1:  addField({ name: "Sam" }, "age", 20).age   ->  20
 // TEST 2:  addField({}, "x", 5).x                      ->  5
 // TEST 3:  addField({ a: 1 }, "a", 9).a                ->  9     (existing key gets overwritten)
@@ -941,9 +947,12 @@ console.log(setAge({ age: 5 }, 0).age);
 // ----- 6. Remove a property -----
 // Write `removeField(obj, key)` that deletes that key from obj and RETURNS obj.
 // Hint: delete obj[key].
-// your code here
+function removeField(obj, key) {
+    delete obj[key];
+    return obj;
+}
+console.log(removeField({ a: 1, b: 2 }, "a"));
 
-// console.log(removeField({ a: 1, b: 2 }, "a"));
 // TEST 1:  "a" in removeField({ a: 1, b: 2 }, "a")     ->  false
 // TEST 2:  "b" in removeField({ a: 1, b: 2 }, "a")     ->  true
 // TEST 3:  removeField({ a: 1, b: 2 }, "a").b          ->  2
@@ -951,9 +960,12 @@ console.log(setAge({ age: 5 }, 0).age);
 // ----- 7. Does the key exist? -----
 // Write `hasField(obj, key)` that RETURNS true if the key exists, false otherwise.
 // Hint: key in obj.  (Note: a key holding undefined still counts as existing — use `in`.)
-// your code here
 
-// console.log(hasField({ a: 1 }, "a"));
+function hasField(obj, key) {
+    return key in obj;
+}
+console.log(hasField({ a: 1 }, "a"));
+
 // TEST 1:  hasField({ a: 1 }, "a")        ->  true
 // TEST 2:  hasField({ a: 1 }, "b")        ->  false
 // TEST 3:  hasField({ a: undefined }, "a") ->  true
@@ -962,9 +974,16 @@ console.log(setAge({ age: 5 }, 0).age);
 // Write `incrementField(obj, key)` that adds 1 to obj[key] and RETURNS obj. If the key
 // is missing, treat it as 0 first (so it becomes 1).
 // Hint: obj[key] = (obj[key] || 0) + 1.
-// your code here
 
-// console.log(incrementField({ a: 1 }, "a"));
+function incrementField(obj, key) {
+    if (obj[key] === undefined) {
+        obj[key] = 0;
+    }
+    obj[key] += 1;
+    return obj;
+}
+console.log(incrementField({ a: 1 }, "a").a);
+
 // TEST 1:  incrementField({ a: 1 }, "a").a       ->  2
 // TEST 2:  incrementField({}, "new").new         ->  1     (missing key starts at 0)
 // TEST 3:  incrementField({ a: 0 }, "a").a       ->  1
@@ -975,9 +994,14 @@ console.log(setAge({ age: 5 }, 0).age);
 
 // ----- 9. Reach into a nested object -----
 // Write `getCity(user)` that RETURNS user.address.city (an object inside an object).
-// your code here
 
-// console.log(getCity({ name: "Sam", address: { city: "Lagos", zip: "100001" } }));
+function getCity(user) {
+    return user.address.city;
+}
+console.log(getCity({ name: "Sam", address: { city: "Lagos", zip: "100001" } }));
+console.log(getCity({ address: { city: "Paris" } })) 
+console.log(getCity({ address: { city: "", zip: "0" } })) 
+
 // TEST 1:  getCity({ name: "Sam", address: { city: "Lagos" } })  ->  "Lagos"
 // TEST 2:  getCity({ address: { city: "Paris" } })               ->  "Paris"
 // TEST 3:  getCity({ address: { city: "", zip: "0" } })          ->  ""
@@ -985,9 +1009,15 @@ console.log(setAge({ age: 5 }, 0).age);
 // ----- 10. Value or fallback -----
 // Write `valueOr(obj, key, fallback)` that RETURNS obj[key] if the key EXISTS, else fallback.
 // Hint: if (key in obj) return obj[key]; else return fallback.
-// your code here
 
-// console.log(valueOr({ a: 1 }, "a", 0));
+function valueOr(obj, key, fallback){
+  if (key in obj) return obj[key];
+  else return fallback
+}
+console.log(valueOr({ a: 1 }, "a", 0));
+console.log(valueOr({ a: 1 }, "b", 0));
+console.log(valueOr({ a: 0 }, "a", 99));
+
 // TEST 1:  valueOr({ a: 1 }, "a", 0)          ->  1
 // TEST 2:  valueOr({ a: 1 }, "b", 0)          ->  0
 // TEST 3:  valueOr({ a: 0 }, "a", 99)         ->  0     (key exists, so 0 wins over the fallback)
@@ -996,9 +1026,19 @@ console.log(setAge({ age: 5 }, 0).age);
 // Write `makeCounter()` that RETURNS an object with count: 0 and a method inc()
 // that adds 1 to its OWN count and RETURNS the new count.
 // Hint: { count: 0, inc() { this.count++; return this.count; } }  — `this` is the object.
-// your code here
+function makeCounter() {
+    return {
+        count: 0,
+        inc() {
+            this.count++;
+            return this.count;
+        }
+    };
+}
+const b = makeCounter(); console.log(b.count);
+const a = makeCounter(); a.inc(); a.count; console.log(a.inc());
+const c = makeCounter(); console.log(c.inc());
 
-// const c = makeCounter(); console.log(c.inc());
 // TEST 1:  makeCounter().count        ->  0
 // TEST 2:  const a = makeCounter(); a.inc(); a.inc();  a.count   ->  2
 // TEST 3:  const b = makeCounter(); b.inc()                       ->  1
