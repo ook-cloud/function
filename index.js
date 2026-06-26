@@ -24,7 +24,7 @@
 
    Rules: NO arrays. Inside a function you MAY use everything from
    lesson 6 — variables, data types, operators (% && || !), if,
-   loops, strings, String()/Number()/isNaN, Math.floor(x).
+   loops, strings, String()/Number()/isNaN, Math.floor(x)..
 
    THE ONE BIG RULE: a function gives back a value with `return`.
    `return` is NOT the same as console.log. console.log PRINTS to
