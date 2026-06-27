@@ -1324,9 +1324,24 @@ console.log(omitField({ a: 1, b: 2 }, "a"));
 // Write `firstUniqueChar(word)` -> the FIRST character that appears exactly once.
 // If none, RETURN "". Hint: count every char into an object, then walk the word again
 // and return the first char whose count is 1.
-// your code here
 
-// console.log(firstUniqueChar("leetcode"));
+function firstUniqueChar(word) {
+    const charCounts = {}; 
+    for (const char of word) {
+        if (charCounts[char]) {
+            charCounts[char] += 1; 
+        } else {
+            charCounts[char] = 1;
+        }
+    }
+    for (const char of word) {
+        if (charCounts[char] === 1) {
+            return char;
+        }
+    }
+    return "";
+}
+console.log(firstUniqueChar("leetcode"));
 // EXAMPLE 1:  firstUniqueChar("leetcode")  ->  "l"
 // EXAMPLE 2:  firstUniqueChar("swiss")     ->  "w"
 // EXAMPLE 3:  firstUniqueChar("aabb")      ->  ""    (every char repeats)
@@ -1335,9 +1350,25 @@ console.log(omitField({ a: 1, b: 2 }, "a"));
 // Write `areAnagrams(a, b)` -> true if b is a rearrangement of a (same letters, same
 // counts). Hint: if lengths differ -> false; count a into an object; walk b subtracting;
 // any count going negative or a missing key -> false.
-// your code here
 
-// console.log(areAnagrams("listen", "silent"));
+function areAnagrams(a, b) {
+    if (a.length !== b.length) {
+        return false;
+    }
+    const charCounts = {};
+    for (const char of a) {
+        charCounts[char] = (charCounts[char] || 0) + 1;
+    }
+    for (const char of b) {
+        if (!charCounts[char]) {
+            return false;
+        }
+        charCounts[char] -= 1;
+    }
+    return true;
+}
+console.log(areAnagrams("listen", "silent"));
+
 // EXAMPLE 1:  areAnagrams("listen", "silent")  ->  true
 // EXAMPLE 2:  areAnagrams("hello", "world")    ->  false
 // EXAMPLE 3:  areAnagrams("a", "aa")           ->  false   (different lengths)
@@ -1346,9 +1377,22 @@ console.log(omitField({ a: 1, b: 2 }, "a"));
 // Write `canFormPalindrome(word)` -> true if the letters can be rearranged into a
 // palindrome. Rule: at most ONE letter may have an odd count. Hint: build counts,
 // then count how many counts are odd; ok if that total is 0 or 1.
-// your code here
 
-// console.log(canFormPalindrome("aabb"));
+function canFormPalindrome(word) {
+    const charCounts = {};
+    for (const char of word) {
+        charCounts[char] = (charCounts[char] || 0) + 1;
+    }
+    let oddCount = 0;
+    for (const key in charCounts) {
+        if (charCounts[key] % 2 !== 0) {
+            oddCount++;
+        }
+    }
+    return oddCount <= 1;
+}
+console.log(canFormPalindrome("aabb"));
+
 // EXAMPLE 1:  canFormPalindrome("aabb")     ->  true    (aabb -> "abba")
 // EXAMPLE 2:  canFormPalindrome("abc")      ->  false   (three odd counts)
 // EXAMPLE 3:  canFormPalindrome("racecar")  ->  true    (only e is odd)
@@ -1357,9 +1401,20 @@ console.log(omitField({ a: 1, b: 2 }, "a"));
 // Write `mergeMax(a, b)` -> a NEW object with every key from both; when a key is in
 // BOTH, keep the LARGER value. Hint: copy a, then for each key in b use Math.max if the
 // key already exists, else just take b's value.
-// your code here
 
-// console.log(mergeMax({ a: 1, b: 5 }, { a: 3, b: 2, c: 9 }));
+function mergeMax(a, b) {
+    const out = { ...a };
+    for (const k in b) {
+        if (k in out) {
+            out[k] = Math.max(out[k], b[k]);
+        } else {
+            out[k] = b[k];
+        }
+    }
+    return out;
+}
+console.log(mergeMax({ a: 1, b: 5 }, { a: 3, b: 2, c: 9 }));
+
 // EXAMPLE 1:  mergeMax({ a: 1, b: 5 }, { a: 3, b: 2, c: 9 })  ->  { a: 3, b: 5, c: 9 }
 // EXAMPLE 2:  mergeMax({}, { x: 1 })                          ->  { x: 1 }
 // EXAMPLE 3:  mergeMax({ k: 4 }, { k: 2 })                    ->  { k: 4 }
@@ -1399,9 +1454,19 @@ const SCHOOL = {
 // Write `studentAverage(scores)` where scores is a plain { subject: number } object.
 // RETURN the mean of the values. Everything in the next exercise calls this.
 // Hint: total + count in one for...in loop, then total / count (like ex 17).
-// your code here
 
-// console.log(studentAverage({ math: 90, english: 80, science: 70 }));
+function studentAverage(scores) {
+    let total = 0;
+    let count = 0;
+    for (const subject in scores) {
+        total += scores[subject];
+        count++;
+    }
+    if (count === 0) return 0;
+    return total / count;
+}
+console.log(studentAverage({ math: 90, english: 80, science: 70 }));
+
 // TEST 1:  studentAverage({ math: 90, english: 80, science: 70 })  ->  80
 // TEST 2:  studentAverage({ math: 60, english: 60, science: 60 })  ->  60
 // TEST 3:  studentAverage({ a: 1, b: 2 })                          ->  1.5
@@ -1410,9 +1475,23 @@ const SCHOOL = {
 // Write `classAverage(school, classId)` that RETURNS the mean of the students' averages
 // in that class. Loop the students with for...in, CALL studentAverage on each one's
 // scores, total them, divide by the count. This is the COMPOSE finale.
-// your code here
 
-// console.log(classAverage(SCHOOL, "jss1"));
+function classAverage(school, classId) {
+    const targetClass = school.classes[classId];
+    if (!targetClass) return 0;
+    const students = targetClass.students;
+    let totalClassAverage = 0;
+    let studentCount = 0;
+    for (const studentName in students) {
+        const studentScores = students[studentName];
+        const avg = studentAverage(studentScores);
+        totalClassAverage += avg;
+        studentCount++;
+    }
+    if (studentCount === 0) return 0;
+    return totalClassAverage / studentCount;
+  }
+console.log(classAverage(SCHOOL, "jss1"));
 // TEST 1:  classAverage(SCHOOL, "jss1")  ->  65    (80 + 50, / 2)
 // TEST 2:  classAverage(SCHOOL, "jss2")  ->  75    (90 + 60, / 2)
 // TEST 3:  classAverage({ classes: { x: { students: { p: { a: 10 }, q: { a: 20 } } } } }, "x")  ->  15
