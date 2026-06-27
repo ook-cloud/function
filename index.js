@@ -1046,9 +1046,25 @@ const c = makeCounter(); console.log(c.inc());
 // ----- 12. A bank account with deposit/withdraw -----
 // Write `makeBank(start)` that RETURNS an object with balance: start and two methods:
 // deposit(n) adds n to the balance, withdraw(n) subtracts n; both RETURN the new balance.
-// your code here
 
-// const acct = makeBank(100); console.log(acct.deposit(50));
+function makeBank(start) {
+    return {
+        balance: start,
+        deposit(n) {
+            this.balance += n;
+            return this.balance;
+        },
+        withdraw(n) {
+            this.balance -= n;
+            return this.balance;
+        }
+    };
+}
+
+const acct = makeBank(100); console.log(acct.deposit(50));
+const x = makeBank(100); x.deposit(50); x.withdraw(30); console.log(x.balance); 
+console.log(makeBank(0).balance)
+
 // TEST 1:  makeBank(100).deposit(50)   ->  150
 // TEST 2:  const x = makeBank(100); x.deposit(50); x.withdraw(30); x.balance   ->  120
 // TEST 3:  makeBank(0).balance         ->  0
@@ -1060,9 +1076,14 @@ const c = makeCounter(); console.log(c.inc());
 // ----- 13. Count the keys -----
 // Write `countKeys(obj)` that RETURNS how many keys the object has.
 // Hint: loop `for (const k in obj) count++`  OR  Object.keys(obj).length.
-// your code here
 
-// console.log(countKeys({ a: 1, b: 2, c: 3 }));
+function countKeys(obj) {
+    return Object.keys(obj).length;
+}
+console.log(countKeys({ a: 1, b: 2, c: 3 }));
+console.log(countKeys({}));
+console.log(countKeys({ x: 5}));
+
 // TEST 1:  countKeys({ a: 1, b: 2, c: 3 })  ->  3
 // TEST 2:  countKeys({})                    ->  0
 // TEST 3:  countKeys({ x: 5 })              ->  1
@@ -1070,9 +1091,22 @@ const c = makeCounter(); console.log(c.inc());
 // ----- 14. Sum the values -----
 // Write `sumValues(obj)` that RETURNS the sum of all (numeric) values.
 // Hint: total = 0; for (const k in obj) total += obj[k].
-// your code here
 
-// console.log(sumValues({ a: 1, b: 2, c: 3 }));
+function sumValues(obj) {
+    let sum = 0;
+    const values = Object.values(obj);
+    for (let val of values) {
+        if (typeof val === 'number') {
+            sum += val;
+        }
+    }
+    
+    return sum;
+}
+console.log(sumValues({ a: 1, b: 2, c: 3 }));
+console.log(sumValues({ x: 10 }));
+console.log(sumValues({ }));
+
 // TEST 1:  sumValues({ a: 1, b: 2, c: 3 })  ->  6
 // TEST 2:  sumValues({ x: 10 })             ->  10
 // TEST 3:  sumValues({})                    ->  0
@@ -1080,9 +1114,15 @@ const c = makeCounter(); console.log(c.inc());
 // ----- 15. Biggest value -----
 // Write `maxValue(obj)` that RETURNS the largest value. Assume at least one key.
 // Hint: start `best` from -Infinity, then compare each value.
-// your code here
 
-// console.log(maxValue({ a: 5, b: 9, c: 2 }));
+function maxValue(obj) {
+    const values = Object.values(obj);
+    return Math.max(...values);
+}
+console.log(maxValue({ a: 5, b: 9, c: 2 }));
+console.log(maxValue({ x: 7}));
+console.log(maxValue({ a: -3, b: -1 }));
+
 // TEST 1:  maxValue({ a: 5, b: 9, c: 2 })     ->  9
 // TEST 2:  maxValue({ x: 7 })                 ->  7
 // TEST 3:  maxValue({ a: -3, b: -1 })         ->  -1
@@ -1090,9 +1130,23 @@ const c = makeCounter(); console.log(c.inc());
 // ----- 16. Key with the biggest value -----
 // Write `keyOfMax(obj)` that RETURNS the KEY whose value is largest (first one if tied).
 // Hint: track both bestKey and bestVal as you loop.
-// your code here
 
-// console.log(keyOfMax({ math: 80, art: 95, gym: 88 }));
+function keyOfMax(obj) {
+    let maxKey = null;
+    let maxValue = -Infinity;
+    for (let key in obj) {
+        if (obj[key] > maxValue) {
+            maxValue = obj[key];
+            maxKey = key;
+        }
+    }
+
+    return maxKey;
+}
+console.log(keyOfMax({ math: 80, art: 95, gym: 88 }));
+console.log(keyOfMax({ a: 5, b: 9, c: 2}));
+console.log(keyOfMax({ only: 1 }));
+
 // TEST 1:  keyOfMax({ math: 80, art: 95, gym: 88 })  ->  "art"
 // TEST 2:  keyOfMax({ a: 5, b: 9, c: 2 })            ->  "b"
 // TEST 3:  keyOfMax({ only: 1 })                     ->  "only"
@@ -1100,9 +1154,17 @@ const c = makeCounter(); console.log(c.inc());
 // ----- 17. Average of the values -----
 // Write `averageValue(obj)` that RETURNS the mean of the values (sum divided by count).
 // Hint: total and count together in one loop, then total / count.
-// your code here
 
-// console.log(averageValue({ a: 2, b: 4, c: 6 }));
+function averageValue(obj) {
+    const values = Object.values(obj).filter(val => typeof val === 'number');
+    if (values.length === 0) return 0;
+    const sum = values.reduce((total, val) => total + val, 0);
+    return sum / values.length;
+}
+console.log(averageValue({ a: 2, b: 4, c: 6 }));
+console.log(averageValue({ x: 10 }));
+console.log(averageValue({ a: 1, b: 2 }));
+
 // TEST 1:  averageValue({ a: 2, b: 4, c: 6 })  ->  4
 // TEST 2:  averageValue({ x: 10 })             ->  10
 // TEST 3:  averageValue({ a: 1, b: 2 })        ->  1.5
@@ -1111,9 +1173,18 @@ const c = makeCounter(); console.log(c.inc());
 // Write `doubleValues(obj)` that RETURNS a NEW object with the same keys but every
 // value times 2. The original must stay untouched.
 // Hint: out = {}; for (const k in obj) out[k] = obj[k] * 2.
-// your code here
 
-// console.log(doubleValues({ a: 1, b: 2 }));
+function doubleValues(obj) {
+    const out = {}; 
+    for (const k in obj) {
+        out[k] = obj[k] * 2;
+    }
+    return out; 
+}
+console.log(doubleValues({ a: 1, b: 2 }));
+console.log(doubleValues({ x: 0 }));
+console.log(doubleValues({ }));
+
 // TEST 1:  doubleValues({ a: 1, b: 2 })  ->  { a: 2, b: 4 }
 // TEST 2:  doubleValues({ x: 0 })        ->  { x: 0 }
 // TEST 3:  doubleValues({})              ->  {}
@@ -1121,9 +1192,21 @@ const c = makeCounter(); console.log(c.inc());
 // ----- 19. Render key=value pairs -----
 // Write `toPairs(obj)` that RETURNS "key=value" for each pair, joined by ", ".
 // Hint: build a string; add ", " before every pair except the first.
-// your code here
 
-// console.log(toPairs({ a: 1, b: 2 }));
+function toPairs(obj) {
+    let result = "";
+    let isFirst = true;
+    for (const k in obj) {
+        if (!isFirst) {
+            result += ", ";
+        }
+        result += k + "=" + obj[k];
+        isFirst = false; 
+    }
+    return result;
+}
+console.log(toPairs({ a: 1, b: 2 }));
+
 // TEST 1:  toPairs({ a: 1, b: 2 })  ->  "a=1, b=2"
 // TEST 2:  toPairs({ x: 5 })        ->  "x=5"
 // TEST 3:  toPairs({})              ->  ""
@@ -1138,9 +1221,20 @@ const c = makeCounter(); console.log(c.inc());
 // Write `letterCount(word)` that RETURNS an object mapping each letter to how many
 // times it appears. Hint: counts = {}; for each char, if missing start at 0, then +1.
 //   if (counts[ch] === undefined) counts[ch] = 0;  counts[ch]++;
-// your code here
-
-// console.log(letterCount("hello"));
+function letterCount(word) {
+  const counts = {};
+  
+  for (let i = 0; i < word.length; i++) {
+    const ch = word[i];
+    if (counts[ch] === undefined) {
+      counts[ch] = 0;
+    }
+    counts[ch]++;
+  }
+  
+  return counts;
+}
+console.log(letterCount("hello"));
 // TEST 1:  letterCount("hello")  ->  { h: 1, e: 1, l: 2, o: 1 }
 // TEST 2:  letterCount("aaa")    ->  { a: 3 }
 // TEST 3:  letterCount("")       ->  {}     (empty word, empty object)
@@ -1148,9 +1242,19 @@ const c = makeCounter(); console.log(c.inc());
 // ----- 21. Length of each word -----
 // Write `wordLengths(sentence)` that RETURNS an object mapping each word to its length.
 // Hint: sentence.split(" ") gives the words; loop them, set obj[word] = word.length.
-// your code here
 
-// console.log(wordLengths("the cat sat"));
+function wordLengths(sentence) {
+  const lengths = {};
+  const words = sentence.split(" ");
+  for (let i = 0; i < words.length; i++) {
+    const word = words[i];
+    if (word === "") continue; 
+    lengths[word] = word.length;
+  }
+  return lengths;
+}
+console.log(wordLengths("the cat sat"));
+
 // TEST 1:  wordLengths("the cat sat")  ->  { the: 3, cat: 3, sat: 3 }
 // TEST 2:  wordLengths("hi there")     ->  { hi: 2, there: 5 }
 // TEST 3:  wordLengths("one")          ->  { one: 3 }
@@ -1159,9 +1263,19 @@ const c = makeCounter(); console.log(c.inc());
 // Write `invert(obj)` that RETURNS a new object where each value becomes a key and
 // each key becomes its value. Assume values are unique strings/numbers.
 // Hint: out = {}; for (const k in obj) out[obj[k]] = k.
-// your code here
 
-// console.log(invert({ a: "x", b: "y" }));
+function invert(obj) {
+  const out = {};
+
+  for (const k in obj) {
+    const value = obj[k];
+
+    out[value] = k;
+  }
+  return out;
+}
+console.log(invert({ a: "x", b: "y" }));
+
 // TEST 1:  invert({ a: "x", b: "y" })   ->  { x: "a", y: "b" }
 // TEST 2:  invert({ one: 1 })           ->  { "1": "one" }   (number value becomes a key)
 // TEST 3:  invert({})                   ->  {}
@@ -1173,9 +1287,12 @@ const c = makeCounter(); console.log(c.inc());
 // ----- 23. Shallow copy -----
 // Write `copyObject(obj)` that RETURNS a NEW object with the same keys and values.
 // Changing the copy must NOT change the original. Hint: { ...obj }.
-// your code here
 
-// console.log(copyObject({ a: 1, b: 2 }));
+function copyObject(obj) {
+    return { ...obj };
+}
+console.log(copyObject({ a: 1, b: 2 }));
+
 // TEST 1:  copyObject({ a: 1, b: 2 }).a   ->  1
 // TEST 2:  const o = { a: 1 }; copyObject(o) === o   ->  false   (a NEW object, not the same one)
 // TEST 3:  copyObject({})                 ->  {}
@@ -1184,9 +1301,14 @@ const c = makeCounter(); console.log(c.inc());
 // Write `omitField(obj, key)` that RETURNS a NEW object with that key removed, leaving
 // the original untouched. (Contrast removeField in ex 6, which mutates.)
 // Hint: copyObject first, then delete the key from the copy.
-// your code here
 
-// console.log(omitField({ a: 1, b: 2 }, "a"));
+function omitField(obj, key) {
+    const copy = { ...obj };
+    delete copy[key];
+    return copy;
+}
+console.log(omitField({ a: 1, b: 2 }, "a"));
+
 // TEST 1:  omitField({ a: 1, b: 2 }, "a")                  ->  { b: 2 }
 // TEST 2:  const o = { a: 1, b: 2 }; omitField(o, "a"); "a" in o   ->  true   (original kept)
 // TEST 3:  omitField({ a: 1 }, "a")                        ->  {}
