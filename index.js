@@ -24,7 +24,7 @@
 
    Rules: NO arrays. Inside a function you MAY use everything from
    lesson 6 — variables, data types, operators (% && || !), if,
-   loops, strings, String()/Number()/isNaN, Math.floor(x).
+   loops, strings, String()/Number()/isNaN, Math.floor(x)..
 
    THE ONE BIG RULE: a function gives back a value with `return`.
    `return` is NOT the same as console.log. console.log PRINTS to
@@ -702,9 +702,19 @@ console.log(collatzSteps(6));
 // Write `fizzAt(i)` that RETURNS, for a single number i:
 //   "FizzBuzz" if divisible by 3 and 5, "Fizz" if by 3, "Buzz" if by 5, else String(i).
 
-function fizzAt(i) {}
+function fizzAt(i) {
+  if (i % 3 === 0 && i % 5 === 0) {
+    return "FizzBuzz";
+  } else if (i % 3 === 0) {
+    return "Fizz";
+  } else if (i % 5 === 0) {
+    return "Buzz";
+  } else {
+    return String(i);
+  }
+}
+console.log(fizzAt(15));
 
-// console.log(fizzAt(15));
 // EXAMPLE 1:  fizzAt(15)  ->  "FizzBuzz"
 // EXAMPLE 2:  fizzAt(9)   ->  "Fizz"
 // EXAMPLE 3:  fizzAt(7)   ->  "7"
@@ -713,9 +723,14 @@ function fizzAt(i) {}
 // A Harshad number is divisible by the SUM of its own digits.
 // Write `isHarshad(n)` and CALL sumDigits(n) from E1 — do NOT re-sum the digits here.
 // Hint: return n % sumDigits(n) === 0;
-// your code here
+function isHarshad(n) {
+  const digitSum = sumDigits(n);
 
-// console.log(isHarshad(18));
+  if (digitSum === 0) return false;
+  return n % digitSum === 0;
+}
+console.log(isHarshad(18));
+
 // EXAMPLE 1:  isHarshad(18)  ->  true    (1+8=9, and 18 % 9 === 0)
 // EXAMPLE 2:  isHarshad(11)  ->  false   (1+1=2, and 11 % 2 !== 0)
 // EXAMPLE 3:  isHarshad(21)  ->  true    (2+1=3, and 21 % 3 === 0)
@@ -724,9 +739,12 @@ function fizzAt(i) {}
 // Write `isPalindrome(n)` -> true if a non-negative integer reads the same both ways.
 // Do NOT re-derive the reverse here — CALL reverseNumber(n) from E4 and compare to n.
 // Hint: return reverseNumber(n) === n;
-// your code here
 
-// console.log(isPalindrome(1331));
+function isPalindrome(n) {
+  return n === reverseNumber(n);
+}
+console.log(isPalindrome(1331));
+
 // EXAMPLE 1:  isPalindrome(1331)  ->  true
 // EXAMPLE 2:  isPalindrome(1234)  ->  false
 // EXAMPLE 3:  isPalindrome(8)     ->  true
@@ -735,9 +753,17 @@ function fizzAt(i) {}
 // Write `gcd(a, b)` -> the biggest number that divides BOTH a and b evenly.
 // Hint (easy way): loop i from 1 up to the smaller of a and b; whenever i divides
 //   both a and b, remember it; the LAST such i is the answer.
-// your code here
 
-// console.log(gcd(12, 8));
+function gcd(a, b) {
+  while (b !== 0) {
+    let remainder = a % b;
+    a = b;
+    b = remainder;
+  }
+  return a;
+}
+console.log(gcd(12, 8));
+
 // EXAMPLE 1:  gcd(12, 8)   ->  4    (1,2,4 divide both; 4 is biggest)
 // EXAMPLE 2:  gcd(7, 5)    ->  1    (only 1 divides both)
 // EXAMPLE 3:  gcd(9, 9)    ->  9
@@ -746,9 +772,15 @@ function fizzAt(i) {}
 // Keep summing the digits until only ONE digit is left, then RETURN it.
 // Write `digitalRoot(n)` and CALL `sumDigits(n)` (from E1) inside a loop.
 // Hint: while n has more than one digit (n >= 10) -> n = sumDigits(n); return n.
-// your code here
 
-// console.log(digitalRoot(942));
+function digitalRoot(n) {
+  while (n > 9) {
+    n = sumDigits(n);
+  }
+  return n;
+}
+console.log(digitalRoot(19900403));
+
 // EXAMPLE 1:  digitalRoot(942)  ->  6    (9+4+2=15, then 1+5=6)
 // EXAMPLE 2:  digitalRoot(38)   ->  2    (3+8=11, then 1+1=2)
 // EXAMPLE 3:  digitalRoot(5)    ->  5    (already one digit)
@@ -760,9 +792,15 @@ function fizzAt(i) {}
 // ----- Countdown string -----
 // Write `countdown(n)` that RETURNS "n n-1 ... 1 Go!" as one string with single spaces.
 // You may use a loop OR call countdown(n-1) inside itself (recursion). Either is fine.
-// your code here
 
-// console.log(countdown(3));
+function countdown(n) {
+  if (n < 1) {
+    return "Go!";
+  }
+  return n + " " + countdown(n - 1);
+}
+console.log(countdown(3));
+
 // TEST 1:  countdown(3)  ->  "3 2 1 Go!"
 // TEST 2:  countdown(1)  ->  "1 Go!"
 // TEST 3:  countdown(5)  ->  "5 4 3 2 1 Go!"
@@ -835,18 +873,25 @@ function fizzAt(i) {}
 
 // ----- 1. Build an object -----
 // Write `makeUser()` that takes NO input and RETURNS the object { name: "Sam", age: 20 }.
-// your code here
 
-// console.log(makeUser());
+const makeUser = () => ({ name: "Sam", age: 20 });
+console.log(makeUser().name);
+console.log(makeUser().age);
+console.log(typeof makeUser());
+
 // TEST 1:  makeUser().name      ->  "Sam"
 // TEST 2:  makeUser().age       ->  20
 // TEST 3:  typeof makeUser()    ->  "object"
 
 // ----- 2. Read with a dot -----
 // Write `getName(user)` that RETURNS the `name` property of the object passed in.
-// your code here
 
-// console.log(getName({ name: "Ada", age: 30 }));
+function getName(user) {
+  return user.name;
+}
+console.log(getName({ name: "Ada", age: 30 }));
+console.log(getName({ name: "Bo" }));
+console.log(getName({ name: " " }));
 // TEST 1:  getName({ name: "Ada", age: 30 })  ->  "Ada"
 // TEST 2:  getName({ name: "Bo" })            ->  "Bo"
 // TEST 3:  getName({ name: "" })              ->  ""
@@ -854,9 +899,13 @@ function fizzAt(i) {}
 // ----- 3. Read with a variable key (bracket) -----
 // Write `getValue(obj, key)` that RETURNS the value behind `key`. The key is in a
 // variable, so you MUST use bracket access obj[key] (dot would look for "key" literally).
-// your code here
+function getValue(obj, key) {
+  return obj[key];
+}
+console.log(getValue({ a: 1, b: 2 }, "b"));
+console.log(getValue({ color: "red" }, "color"));
+console.log(getValue({ a: 1 }, "missing"));
 
-// console.log(getValue({ a: 1, b: 2 }, "b"));
 // TEST 1:  getValue({ a: 1, b: 2 }, "b")        ->  2
 // TEST 2:  getValue({ color: "red" }, "color")  ->  "red"
 // TEST 3:  getValue({ a: 1 }, "missing")        ->  undefined
@@ -867,9 +916,14 @@ function fizzAt(i) {}
 
 // ----- 4. Update a property -----
 // Write `setAge(user, newAge)` that sets user.age to newAge and RETURNS the same user.
-// your code here
+function setAge(user, newAge) {
+  user.age = newAge;
+  return user;
+}
+console.log(setAge({ name: "Sam", age: 20 }, 21).age);
+console.log(setAge({ name: "Sam", age: 20 }, 21).name);
+console.log(setAge({ age: 5 }, 0).age);
 
-// console.log(setAge({ name: "Sam", age: 20 }, 21));
 // TEST 1:  setAge({ name: "Sam", age: 20 }, 21).age  ->  21
 // TEST 2:  setAge({ name: "Sam", age: 20 }, 21).name ->  "Sam"   (other keys untouched)
 // TEST 3:  setAge({ age: 5 }, 0).age                 ->  0
@@ -877,9 +931,15 @@ function fizzAt(i) {}
 // ----- 5. Add a property with a variable key -----
 // Write `addField(obj, key, value)` that adds key = value to obj and RETURNS obj.
 // Use bracket set: obj[key] = value.
-// your code here
 
-// console.log(addField({ name: "Sam" }, "age", 20));
+function addField(obj, key, value) {
+  obj[key] = value;
+  return obj;
+}
+console.log(addField({ name: "Sam" }, "age", 20).age);
+console.log(addField({}, "X", 5).X);
+console.log(addField({ a: 1 }, "a", 9).a);
+
 // TEST 1:  addField({ name: "Sam" }, "age", 20).age   ->  20
 // TEST 2:  addField({}, "x", 5).x                      ->  5
 // TEST 3:  addField({ a: 1 }, "a", 9).a                ->  9     (existing key gets overwritten)
@@ -887,9 +947,12 @@ function fizzAt(i) {}
 // ----- 6. Remove a property -----
 // Write `removeField(obj, key)` that deletes that key from obj and RETURNS obj.
 // Hint: delete obj[key].
-// your code here
+function removeField(obj, key) {
+  delete obj[key];
+  return obj;
+}
+console.log(removeField({ a: 1, b: 2 }, "a"));
 
-// console.log(removeField({ a: 1, b: 2 }, "a"));
 // TEST 1:  "a" in removeField({ a: 1, b: 2 }, "a")     ->  false
 // TEST 2:  "b" in removeField({ a: 1, b: 2 }, "a")     ->  true
 // TEST 3:  removeField({ a: 1, b: 2 }, "a").b          ->  2
@@ -897,9 +960,12 @@ function fizzAt(i) {}
 // ----- 7. Does the key exist? -----
 // Write `hasField(obj, key)` that RETURNS true if the key exists, false otherwise.
 // Hint: key in obj.  (Note: a key holding undefined still counts as existing — use `in`.)
-// your code here
 
-// console.log(hasField({ a: 1 }, "a"));
+function hasField(obj, key) {
+  return key in obj;
+}
+console.log(hasField({ a: 1 }, "a"));
+
 // TEST 1:  hasField({ a: 1 }, "a")        ->  true
 // TEST 2:  hasField({ a: 1 }, "b")        ->  false
 // TEST 3:  hasField({ a: undefined }, "a") ->  true
@@ -908,9 +974,16 @@ function fizzAt(i) {}
 // Write `incrementField(obj, key)` that adds 1 to obj[key] and RETURNS obj. If the key
 // is missing, treat it as 0 first (so it becomes 1).
 // Hint: obj[key] = (obj[key] || 0) + 1.
-// your code here
 
-// console.log(incrementField({ a: 1 }, "a"));
+function incrementField(obj, key) {
+  if (obj[key] === undefined) {
+    obj[key] = 0;
+  }
+  obj[key] += 1;
+  return obj;
+}
+console.log(incrementField({ a: 1 }, "a").a);
+
 // TEST 1:  incrementField({ a: 1 }, "a").a       ->  2
 // TEST 2:  incrementField({}, "new").new         ->  1     (missing key starts at 0)
 // TEST 3:  incrementField({ a: 0 }, "a").a       ->  1
@@ -921,9 +994,16 @@ function fizzAt(i) {}
 
 // ----- 9. Reach into a nested object -----
 // Write `getCity(user)` that RETURNS user.address.city (an object inside an object).
-// your code here
 
-// console.log(getCity({ name: "Sam", address: { city: "Lagos", zip: "100001" } }));
+function getCity(user) {
+  return user.address.city;
+}
+console.log(
+  getCity({ name: "Sam", address: { city: "Lagos", zip: "100001" } }),
+);
+console.log(getCity({ address: { city: "Paris" } }));
+console.log(getCity({ address: { city: "", zip: "0" } }));
+
 // TEST 1:  getCity({ name: "Sam", address: { city: "Lagos" } })  ->  "Lagos"
 // TEST 2:  getCity({ address: { city: "Paris" } })               ->  "Paris"
 // TEST 3:  getCity({ address: { city: "", zip: "0" } })          ->  ""
@@ -931,9 +1011,15 @@ function fizzAt(i) {}
 // ----- 10. Value or fallback -----
 // Write `valueOr(obj, key, fallback)` that RETURNS obj[key] if the key EXISTS, else fallback.
 // Hint: if (key in obj) return obj[key]; else return fallback.
-// your code here
 
-// console.log(valueOr({ a: 1 }, "a", 0));
+function valueOr(obj, key, fallback) {
+  if (key in obj) return obj[key];
+  else return fallback;
+}
+console.log(valueOr({ a: 1 }, "a", 0));
+console.log(valueOr({ a: 1 }, "b", 0));
+console.log(valueOr({ a: 0 }, "a", 99));
+
 // TEST 1:  valueOr({ a: 1 }, "a", 0)          ->  1
 // TEST 2:  valueOr({ a: 1 }, "b", 0)          ->  0
 // TEST 3:  valueOr({ a: 0 }, "a", 99)         ->  0     (key exists, so 0 wins over the fallback)
@@ -942,9 +1028,24 @@ function fizzAt(i) {}
 // Write `makeCounter()` that RETURNS an object with count: 0 and a method inc()
 // that adds 1 to its OWN count and RETURNS the new count.
 // Hint: { count: 0, inc() { this.count++; return this.count; } }  — `this` is the object.
-// your code here
+function makeCounter() {
+  return {
+    count: 0,
+    inc() {
+      this.count++;
+      return this.count;
+    },
+  };
+}
+const b = makeCounter();
+console.log(b.count);
+const a = makeCounter();
+a.inc();
+a.count;
+console.log(a.inc());
+const c = makeCounter();
+console.log(c.inc());
 
-// const c = makeCounter(); console.log(c.inc());
 // TEST 1:  makeCounter().count        ->  0
 // TEST 2:  const a = makeCounter(); a.inc(); a.inc();  a.count   ->  2
 // TEST 3:  const b = makeCounter(); b.inc()                       ->  1
@@ -952,9 +1053,29 @@ function fizzAt(i) {}
 // ----- 12. A bank account with deposit/withdraw -----
 // Write `makeBank(start)` that RETURNS an object with balance: start and two methods:
 // deposit(n) adds n to the balance, withdraw(n) subtracts n; both RETURN the new balance.
-// your code here
 
-// const acct = makeBank(100); console.log(acct.deposit(50));
+function makeBank(start) {
+  return {
+    balance: start,
+    deposit(n) {
+      this.balance += n;
+      return this.balance;
+    },
+    withdraw(n) {
+      this.balance -= n;
+      return this.balance;
+    },
+  };
+}
+
+const acct = makeBank(100);
+console.log(acct.deposit(50));
+const x = makeBank(100);
+x.deposit(50);
+x.withdraw(30);
+console.log(x.balance);
+console.log(makeBank(0).balance);
+
 // TEST 1:  makeBank(100).deposit(50)   ->  150
 // TEST 2:  const x = makeBank(100); x.deposit(50); x.withdraw(30); x.balance   ->  120
 // TEST 3:  makeBank(0).balance         ->  0
@@ -966,9 +1087,14 @@ function fizzAt(i) {}
 // ----- 13. Count the keys -----
 // Write `countKeys(obj)` that RETURNS how many keys the object has.
 // Hint: loop `for (const k in obj) count++`  OR  Object.keys(obj).length.
-// your code here
 
-// console.log(countKeys({ a: 1, b: 2, c: 3 }));
+function countKeys(obj) {
+  return Object.keys(obj).length;
+}
+console.log(countKeys({ a: 1, b: 2, c: 3 }));
+console.log(countKeys({}));
+console.log(countKeys({ x: 5 }));
+
 // TEST 1:  countKeys({ a: 1, b: 2, c: 3 })  ->  3
 // TEST 2:  countKeys({})                    ->  0
 // TEST 3:  countKeys({ x: 5 })              ->  1
@@ -976,9 +1102,22 @@ function fizzAt(i) {}
 // ----- 14. Sum the values -----
 // Write `sumValues(obj)` that RETURNS the sum of all (numeric) values.
 // Hint: total = 0; for (const k in obj) total += obj[k].
-// your code here
 
-// console.log(sumValues({ a: 1, b: 2, c: 3 }));
+function sumValues(obj) {
+  let sum = 0;
+  const values = Object.values(obj);
+  for (let val of values) {
+    if (typeof val === "number") {
+      sum += val;
+    }
+  }
+
+  return sum;
+}
+console.log(sumValues({ a: 1, b: 2, c: 3 }));
+console.log(sumValues({ x: 10 }));
+console.log(sumValues({}));
+
 // TEST 1:  sumValues({ a: 1, b: 2, c: 3 })  ->  6
 // TEST 2:  sumValues({ x: 10 })             ->  10
 // TEST 3:  sumValues({})                    ->  0
@@ -986,9 +1125,15 @@ function fizzAt(i) {}
 // ----- 15. Biggest value -----
 // Write `maxValue(obj)` that RETURNS the largest value. Assume at least one key.
 // Hint: start `best` from -Infinity, then compare each value.
-// your code here
 
-// console.log(maxValue({ a: 5, b: 9, c: 2 }));
+function maxValue(obj) {
+  const values = Object.values(obj);
+  return Math.max(...values);
+}
+console.log(maxValue({ a: 5, b: 9, c: 2 }));
+console.log(maxValue({ x: 7 }));
+console.log(maxValue({ a: -3, b: -1 }));
+
 // TEST 1:  maxValue({ a: 5, b: 9, c: 2 })     ->  9
 // TEST 2:  maxValue({ x: 7 })                 ->  7
 // TEST 3:  maxValue({ a: -3, b: -1 })         ->  -1
@@ -996,9 +1141,23 @@ function fizzAt(i) {}
 // ----- 16. Key with the biggest value -----
 // Write `keyOfMax(obj)` that RETURNS the KEY whose value is largest (first one if tied).
 // Hint: track both bestKey and bestVal as you loop.
-// your code here
 
-// console.log(keyOfMax({ math: 80, art: 95, gym: 88 }));
+function keyOfMax(obj) {
+  let maxKey = null;
+  let maxValue = -Infinity;
+  for (let key in obj) {
+    if (obj[key] > maxValue) {
+      maxValue = obj[key];
+      maxKey = key;
+    }
+  }
+
+  return maxKey;
+}
+console.log(keyOfMax({ math: 80, art: 95, gym: 88 }));
+console.log(keyOfMax({ a: 5, b: 9, c: 2 }));
+console.log(keyOfMax({ only: 1 }));
+
 // TEST 1:  keyOfMax({ math: 80, art: 95, gym: 88 })  ->  "art"
 // TEST 2:  keyOfMax({ a: 5, b: 9, c: 2 })            ->  "b"
 // TEST 3:  keyOfMax({ only: 1 })                     ->  "only"
@@ -1006,9 +1165,17 @@ function fizzAt(i) {}
 // ----- 17. Average of the values -----
 // Write `averageValue(obj)` that RETURNS the mean of the values (sum divided by count).
 // Hint: total and count together in one loop, then total / count.
-// your code here
 
-// console.log(averageValue({ a: 2, b: 4, c: 6 }));
+function averageValue(obj) {
+  const values = Object.values(obj).filter((val) => typeof val === "number");
+  if (values.length === 0) return 0;
+  const sum = values.reduce((total, val) => total + val, 0);
+  return sum / values.length;
+}
+console.log(averageValue({ a: 2, b: 4, c: 6 }));
+console.log(averageValue({ x: 10 }));
+console.log(averageValue({ a: 1, b: 2 }));
+
 // TEST 1:  averageValue({ a: 2, b: 4, c: 6 })  ->  4
 // TEST 2:  averageValue({ x: 10 })             ->  10
 // TEST 3:  averageValue({ a: 1, b: 2 })        ->  1.5
@@ -1017,9 +1184,18 @@ function fizzAt(i) {}
 // Write `doubleValues(obj)` that RETURNS a NEW object with the same keys but every
 // value times 2. The original must stay untouched.
 // Hint: out = {}; for (const k in obj) out[k] = obj[k] * 2.
-// your code here
 
-// console.log(doubleValues({ a: 1, b: 2 }));
+function doubleValues(obj) {
+  const out = {};
+  for (const k in obj) {
+    out[k] = obj[k] * 2;
+  }
+  return out;
+}
+console.log(doubleValues({ a: 1, b: 2 }));
+console.log(doubleValues({ x: 0 }));
+console.log(doubleValues({}));
+
 // TEST 1:  doubleValues({ a: 1, b: 2 })  ->  { a: 2, b: 4 }
 // TEST 2:  doubleValues({ x: 0 })        ->  { x: 0 }
 // TEST 3:  doubleValues({})              ->  {}
@@ -1027,9 +1203,21 @@ function fizzAt(i) {}
 // ----- 19. Render key=value pairs -----
 // Write `toPairs(obj)` that RETURNS "key=value" for each pair, joined by ", ".
 // Hint: build a string; add ", " before every pair except the first.
-// your code here
 
-// console.log(toPairs({ a: 1, b: 2 }));
+function toPairs(obj) {
+  let result = "";
+  let isFirst = true;
+  for (const k in obj) {
+    if (!isFirst) {
+      result += ", ";
+    }
+    result += k + "=" + obj[k];
+    isFirst = false;
+  }
+  return result;
+}
+console.log(toPairs({ a: 1, b: 2 }));
+
 // TEST 1:  toPairs({ a: 1, b: 2 })  ->  "a=1, b=2"
 // TEST 2:  toPairs({ x: 5 })        ->  "x=5"
 // TEST 3:  toPairs({})              ->  ""
@@ -1044,9 +1232,20 @@ function fizzAt(i) {}
 // Write `letterCount(word)` that RETURNS an object mapping each letter to how many
 // times it appears. Hint: counts = {}; for each char, if missing start at 0, then +1.
 //   if (counts[ch] === undefined) counts[ch] = 0;  counts[ch]++;
-// your code here
+function letterCount(word) {
+  const counts = {};
 
-// console.log(letterCount("hello"));
+  for (let i = 0; i < word.length; i++) {
+    const ch = word[i];
+    if (counts[ch] === undefined) {
+      counts[ch] = 0;
+    }
+    counts[ch]++;
+  }
+
+  return counts;
+}
+console.log(letterCount("hello"));
 // TEST 1:  letterCount("hello")  ->  { h: 1, e: 1, l: 2, o: 1 }
 // TEST 2:  letterCount("aaa")    ->  { a: 3 }
 // TEST 3:  letterCount("")       ->  {}     (empty word, empty object)
@@ -1054,9 +1253,19 @@ function fizzAt(i) {}
 // ----- 21. Length of each word -----
 // Write `wordLengths(sentence)` that RETURNS an object mapping each word to its length.
 // Hint: sentence.split(" ") gives the words; loop them, set obj[word] = word.length.
-// your code here
 
-// console.log(wordLengths("the cat sat"));
+function wordLengths(sentence) {
+  const lengths = {};
+  const words = sentence.split(" ");
+  for (let i = 0; i < words.length; i++) {
+    const word = words[i];
+    if (word === "") continue;
+    lengths[word] = word.length;
+  }
+  return lengths;
+}
+console.log(wordLengths("the cat sat"));
+
 // TEST 1:  wordLengths("the cat sat")  ->  { the: 3, cat: 3, sat: 3 }
 // TEST 2:  wordLengths("hi there")     ->  { hi: 2, there: 5 }
 // TEST 3:  wordLengths("one")          ->  { one: 3 }
@@ -1065,9 +1274,19 @@ function fizzAt(i) {}
 // Write `invert(obj)` that RETURNS a new object where each value becomes a key and
 // each key becomes its value. Assume values are unique strings/numbers.
 // Hint: out = {}; for (const k in obj) out[obj[k]] = k.
-// your code here
 
-// console.log(invert({ a: "x", b: "y" }));
+function invert(obj) {
+  const out = {};
+
+  for (const k in obj) {
+    const value = obj[k];
+
+    out[value] = k;
+  }
+  return out;
+}
+console.log(invert({ a: "x", b: "y" }));
+
 // TEST 1:  invert({ a: "x", b: "y" })   ->  { x: "a", y: "b" }
 // TEST 2:  invert({ one: 1 })           ->  { "1": "one" }   (number value becomes a key)
 // TEST 3:  invert({})                   ->  {}
@@ -1079,9 +1298,12 @@ function fizzAt(i) {}
 // ----- 23. Shallow copy -----
 // Write `copyObject(obj)` that RETURNS a NEW object with the same keys and values.
 // Changing the copy must NOT change the original. Hint: { ...obj }.
-// your code here
 
-// console.log(copyObject({ a: 1, b: 2 }));
+function copyObject(obj) {
+  return { ...obj };
+}
+console.log(copyObject({ a: 1, b: 2 }));
+
 // TEST 1:  copyObject({ a: 1, b: 2 }).a   ->  1
 // TEST 2:  const o = { a: 1 }; copyObject(o) === o   ->  false   (a NEW object, not the same one)
 // TEST 3:  copyObject({})                 ->  {}
@@ -1090,9 +1312,14 @@ function fizzAt(i) {}
 // Write `omitField(obj, key)` that RETURNS a NEW object with that key removed, leaving
 // the original untouched. (Contrast removeField in ex 6, which mutates.)
 // Hint: copyObject first, then delete the key from the copy.
-// your code here
 
-// console.log(omitField({ a: 1, b: 2 }, "a"));
+function omitField(obj, key) {
+  const copy = { ...obj };
+  delete copy[key];
+  return copy;
+}
+console.log(omitField({ a: 1, b: 2 }, "a"));
+
 // TEST 1:  omitField({ a: 1, b: 2 }, "a")                  ->  { b: 2 }
 // TEST 2:  const o = { a: 1, b: 2 }; omitField(o, "a"); "a" in o   ->  true   (original kept)
 // TEST 3:  omitField({ a: 1 }, "a")                        ->  {}
@@ -1108,9 +1335,24 @@ function fizzAt(i) {}
 // Write `firstUniqueChar(word)` -> the FIRST character that appears exactly once.
 // If none, RETURN "". Hint: count every char into an object, then walk the word again
 // and return the first char whose count is 1.
-// your code here
 
-// console.log(firstUniqueChar("leetcode"));
+function firstUniqueChar(word) {
+  const charCounts = {};
+  for (const char of word) {
+    if (charCounts[char]) {
+      charCounts[char] += 1;
+    } else {
+      charCounts[char] = 1;
+    }
+  }
+  for (const char of word) {
+    if (charCounts[char] === 1) {
+      return char;
+    }
+  }
+  return "";
+}
+console.log(firstUniqueChar("leetcode"));
 // EXAMPLE 1:  firstUniqueChar("leetcode")  ->  "l"
 // EXAMPLE 2:  firstUniqueChar("swiss")     ->  "w"
 // EXAMPLE 3:  firstUniqueChar("aabb")      ->  ""    (every char repeats)
@@ -1119,9 +1361,25 @@ function fizzAt(i) {}
 // Write `areAnagrams(a, b)` -> true if b is a rearrangement of a (same letters, same
 // counts). Hint: if lengths differ -> false; count a into an object; walk b subtracting;
 // any count going negative or a missing key -> false.
-// your code here
 
-// console.log(areAnagrams("listen", "silent"));
+function areAnagrams(a, b) {
+  if (a.length !== b.length) {
+    return false;
+  }
+  const charCounts = {};
+  for (const char of a) {
+    charCounts[char] = (charCounts[char] || 0) + 1;
+  }
+  for (const char of b) {
+    if (!charCounts[char]) {
+      return false;
+    }
+    charCounts[char] -= 1;
+  }
+  return true;
+}
+console.log(areAnagrams("listen", "silent"));
+
 // EXAMPLE 1:  areAnagrams("listen", "silent")  ->  true
 // EXAMPLE 2:  areAnagrams("hello", "world")    ->  false
 // EXAMPLE 3:  areAnagrams("a", "aa")           ->  false   (different lengths)
@@ -1130,9 +1388,22 @@ function fizzAt(i) {}
 // Write `canFormPalindrome(word)` -> true if the letters can be rearranged into a
 // palindrome. Rule: at most ONE letter may have an odd count. Hint: build counts,
 // then count how many counts are odd; ok if that total is 0 or 1.
-// your code here
 
-// console.log(canFormPalindrome("aabb"));
+function canFormPalindrome(word) {
+  const charCounts = {};
+  for (const char of word) {
+    charCounts[char] = (charCounts[char] || 0) + 1;
+  }
+  let oddCount = 0;
+  for (const key in charCounts) {
+    if (charCounts[key] % 2 !== 0) {
+      oddCount++;
+    }
+  }
+  return oddCount <= 1;
+}
+console.log(canFormPalindrome("aabb"));
+
 // EXAMPLE 1:  canFormPalindrome("aabb")     ->  true    (aabb -> "abba")
 // EXAMPLE 2:  canFormPalindrome("abc")      ->  false   (three odd counts)
 // EXAMPLE 3:  canFormPalindrome("racecar")  ->  true    (only e is odd)
@@ -1141,9 +1412,20 @@ function fizzAt(i) {}
 // Write `mergeMax(a, b)` -> a NEW object with every key from both; when a key is in
 // BOTH, keep the LARGER value. Hint: copy a, then for each key in b use Math.max if the
 // key already exists, else just take b's value.
-// your code here
 
-// console.log(mergeMax({ a: 1, b: 5 }, { a: 3, b: 2, c: 9 }));
+function mergeMax(a, b) {
+  const out = { ...a };
+  for (const k in b) {
+    if (k in out) {
+      out[k] = Math.max(out[k], b[k]);
+    } else {
+      out[k] = b[k];
+    }
+  }
+  return out;
+}
+console.log(mergeMax({ a: 1, b: 5 }, { a: 3, b: 2, c: 9 }));
+
 // EXAMPLE 1:  mergeMax({ a: 1, b: 5 }, { a: 3, b: 2, c: 9 })  ->  { a: 3, b: 5, c: 9 }
 // EXAMPLE 2:  mergeMax({}, { x: 1 })                          ->  { x: 1 }
 // EXAMPLE 3:  mergeMax({ k: 4 }, { k: 2 })                    ->  { k: 4 }
@@ -1183,9 +1465,19 @@ const SCHOOL = {
 // Write `studentAverage(scores)` where scores is a plain { subject: number } object.
 // RETURN the mean of the values. Everything in the next exercise calls this.
 // Hint: total + count in one for...in loop, then total / count (like ex 17).
-// your code here
 
-// console.log(studentAverage({ math: 90, english: 80, science: 70 }));
+function studentAverage(scores) {
+  let total = 0;
+  let count = 0;
+  for (const subject in scores) {
+    total += scores[subject];
+    count++;
+  }
+  if (count === 0) return 0;
+  return total / count;
+}
+console.log(studentAverage({ math: 90, english: 80, science: 70 }));
+
 // TEST 1:  studentAverage({ math: 90, english: 80, science: 70 })  ->  80
 // TEST 2:  studentAverage({ math: 60, english: 60, science: 60 })  ->  60
 // TEST 3:  studentAverage({ a: 1, b: 2 })                          ->  1.5
@@ -1194,9 +1486,23 @@ const SCHOOL = {
 // Write `classAverage(school, classId)` that RETURNS the mean of the students' averages
 // in that class. Loop the students with for...in, CALL studentAverage on each one's
 // scores, total them, divide by the count. This is the COMPOSE finale.
-// your code here
 
-// console.log(classAverage(SCHOOL, "jss1"));
+function classAverage(school, classId) {
+  const targetClass = school.classes[classId];
+  if (!targetClass) return 0;
+  const students = targetClass.students;
+  let totalClassAverage = 0;
+  let studentCount = 0;
+  for (const studentName in students) {
+    const studentScores = students[studentName];
+    const avg = studentAverage(studentScores);
+    totalClassAverage += avg;
+    studentCount++;
+  }
+  if (studentCount === 0) return 0;
+  return totalClassAverage / studentCount;
+}
+console.log(classAverage(SCHOOL, "jss1"));
 // TEST 1:  classAverage(SCHOOL, "jss1")  ->  65    (80 + 50, / 2)
 // TEST 2:  classAverage(SCHOOL, "jss2")  ->  75    (90 + 60, / 2)
 // TEST 3:  classAverage({ classes: { x: { students: { p: { a: 10 }, q: { a: 20 } } } } }, "x")  ->  15
