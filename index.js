@@ -1167,10 +1167,14 @@ console.log(keyOfMax({ only: 1 }));
 // Hint: total and count together in one loop, then total / count.
 
 function averageValue(obj) {
-  const values = Object.values(obj).filter((val) => typeof val === "number");
-  if (values.length === 0) return 0;
-  const sum = values.reduce((total, val) => total + val, 0);
-  return sum / values.length;
+  let total = 0;
+  let count = 0;
+  for (const k in obj) {
+    total += obj[k];
+    count++;
+  }
+  if (count === 0) return 0;
+  return total / count;
 }
 console.log(averageValue({ a: 2, b: 4, c: 6 }));
 console.log(averageValue({ x: 10 }));
