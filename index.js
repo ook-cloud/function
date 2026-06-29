@@ -1390,15 +1390,15 @@ console.log(areAnagrams("listen", "silent"));
 // then count how many counts are odd; ok if that total is 0 or 1.
 
 function canFormPalindrome(word) {
-  const charCounts = {};
-  for (const char of word) {
-    charCounts[char] = (charCounts[char] || 0) + 1;
+  const Counts = {};
+  for (let i = 0; i < word.length; i++) {
+    const ch = word[i];
+    if (Counts[ch] === undefined) Counts[ch] = 0;
+    Counts[ch]++;
   }
   let oddCount = 0;
-  for (const key in charCounts) {
-    if (charCounts[key] % 2 !== 0) {
-      oddCount++;
-    }
+  for (const key in Counts) {
+    if (Counts[key] % 2 !== 0) oddCount++;
   }
   return oddCount <= 1;
 }
@@ -1469,11 +1469,10 @@ const SCHOOL = {
 function studentAverage(scores) {
   let total = 0;
   let count = 0;
-  for (const subject in scores) {
-    total += scores[subject];
+  for (const b in scores) {
+    total += scores[b];
     count++;
   }
-  if (count === 0) return 0;
   return total / count;
 }
 console.log(studentAverage({ math: 90, english: 80, science: 70 }));
@@ -1487,22 +1486,34 @@ console.log(studentAverage({ math: 90, english: 80, science: 70 }));
 // in that class. Loop the students with for...in, CALL studentAverage on each one's
 // scores, total them, divide by the count. This is the COMPOSE finale.
 
+// function classAverage(school, classId) {
+//   const targetClass = school.classes[classId];
+//   if (!targetClass) return 0;
+//   const students = targetClass.students;
+//   let totalClassAverage = 0;
+//   let studentCount = 0;
+//   for (const studentName in students) {
+//     const studentScores = students[studentName];
+//     const avg = studentAverage(studentScores);
+//     totalClassAverage += avg;
+//     studentCount++;
+//   }
+//   if (studentCount === 0) return 0;
+//   return totalClassAverage / studentCount;
+// }
 function classAverage(school, classId) {
-  const targetClass = school.classes[classId];
-  if (!targetClass) return 0;
-  const students = targetClass.students;
-  let totalClassAverage = 0;
-  let studentCount = 0;
-  for (const studentName in students) {
-    const studentScores = students[studentName];
-    const avg = studentAverage(studentScores);
-    totalClassAverage += avg;
-    studentCount++;
+  const students = school.classes[classId].students;
+
+  let total = 0;
+  let Count = 0;
+  for (const name in students) {
+    total += studentAverage(students[name]);
+    Count++;
   }
-  if (studentCount === 0) return 0;
-  return totalClassAverage / studentCount;
+  return total / Count;
 }
 console.log(classAverage(SCHOOL, "jss1"));
+
 // TEST 1:  classAverage(SCHOOL, "jss1")  ->  65    (80 + 50, / 2)
 // TEST 2:  classAverage(SCHOOL, "jss2")  ->  75    (90 + 60, / 2)
 // TEST 3:  classAverage({ classes: { x: { students: { p: { a: 10 }, q: { a: 20 } } } } }, "x")  ->  15
