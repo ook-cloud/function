@@ -858,6 +858,7 @@ console.log(countdown(3));
 // Write `makeUser()` that takes NO input and RETURNS the object { name: "Sam", age: 20 }.
 
 const makeUser = () => ({ name: "Sam", age: 20 });
+
 console.log(makeUser().name);
 console.log(makeUser().age);
 console.log(typeof makeUser());
