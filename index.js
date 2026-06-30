@@ -139,8 +139,7 @@ console.log(absValue(-9));
 // Hint: n % 10.
 
 function lastDigit(n) {
-  let last = n % 10;
-  return last;
+  return n % 10;
 }
 console.log(lastDigit(7384));
 // TEST 1:  lastDigit(7384)  ->  4
@@ -299,8 +298,8 @@ console.log(countUp(5));
 // Hint: let i = n; while (i >= 1) { ...; i--; } then add "Go!".
 
 function countDown(n) {
-  let result = " ";
   let i = n;
+  result = " ";
   while (i >= 1) {
     result += i + " ";
     i--;
@@ -402,11 +401,9 @@ console.log(factorial(5));
 // Write `countVowels(word)` that RETURNS how many vowels (a,e,i,o,u) are in a lowercase word.
 // Hint: loop the chars; "aeiou".includes(word[i]).
 function countVowels(word) {
-  let count = 0;
-  const vowels = "aeiou";
-
+  count = 0;
   for (let i = 0; i < word.length; i++) {
-    if (vowels.includes(word[i])) {
+    if ("aeiou".includes(word[i])) {
       count++;
     }
   }
