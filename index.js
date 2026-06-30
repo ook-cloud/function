@@ -857,7 +857,12 @@ console.log(countdown(3));
 // ----- 1. Build an object -----
 // Write `makeUser()` that takes NO input and RETURNS the object { name: "Sam", age: 20 }.
 
-const makeUser = () => ({ name: "Sam", age: 20 });
+function makeUser() {
+  return {
+    name: "Sam",
+    age: 20,
+  };
+}
 
 console.log(makeUser().name);
 console.log(makeUser().age);
@@ -873,6 +878,7 @@ console.log(typeof makeUser());
 function getName(user) {
   return user.name;
 }
+
 console.log(getName({ name: "Ada", age: 30 }));
 console.log(getName({ name: "Bo" }));
 console.log(getName({ name: " " }));
@@ -900,6 +906,7 @@ console.log(getValue({ a: 1 }, "missing"));
 
 // ----- 4. Update a property -----
 // Write `setAge(user, newAge)` that sets user.age to newAge and RETURNS the same user.
+
 function setAge(user, newAge) {
   user.age = newAge;
   return user;
@@ -1088,15 +1095,11 @@ console.log(countKeys({ x: 5 }));
 // Hint: total = 0; for (const k in obj) total += obj[k].
 
 function sumValues(obj) {
-  let sum = 0;
-  const values = Object.values(obj);
-  for (let val of values) {
-    if (typeof val === "number") {
-      sum += val;
-    }
+  count = 0;
+  for (const k in obj) {
+    count += obj[k];
   }
-
-  return sum;
+  return count;
 }
 console.log(sumValues({ a: 1, b: 2, c: 3 }));
 console.log(sumValues({ x: 10 }));
