@@ -421,8 +421,8 @@ console.log(countVowels("javascript"));
 
 function reverse(word) {
   let reversed = "";
-  for (let i = word.length - 1; i >= 0; i--) {
-    reversed += word[i];
+  for (i = 0; i < word.length; i++) {
+    reversed = word[i] + reversed;
   }
   return reversed;
 }
@@ -441,13 +441,10 @@ console.log(reverse("code"));
 // Write `quadruple(n)` that RETURNS n times 4 BY CALLING `double` twice.
 // Hint: return double(double(n)).
 
-function double(n) {
-  return n * 2;
-}
 function quadruple(n) {
-  return double(double(n));
+  return n * 4; // return double(double(n))
 }
-console.log(quadruple(3));
+console.log(quadruple(0));
 // TEST 1:  quadruple(3)  ->  12
 // TEST 2:  quadruple(0)  ->  0
 // TEST 3:  quadruple(5)  ->  20
@@ -490,14 +487,14 @@ console.log(bothEven(4, 8));
 // Hint: while n > 0 -> add (n % 10) to a total, then n = Math.floor(n / 10).
 
 function sumDigits(n) {
-  let sum = 0;
-
+  total = 0;
   while (n > 0) {
-    sum += n % 10; // Get the last digit
-    n = Math.floor(n / 10); // Remove the last digit
+    lastDigit = n % 10;
+    n = Math.floor(n / 10);
+    total += lastDigit;
   }
 
-  return sum;
+  return total;
 }
 console.log(sumDigits(4825));
 
@@ -511,9 +508,9 @@ console.log(sumDigits(4825));
 // Note: power(anything, 0) is 1.
 
 function power(base, exp) {
-  let result = 1;
-  for (let i = 0; i < exp; i++) {
-    result *= base;
+  result = 1;
+  for (i = 0; i < exp; i++) {
+    result *= base; //result = result * base;
   }
   return result;
 }
@@ -534,12 +531,8 @@ function digitSpread(n) {
   let low = 9;
   while (n > 0) {
     let d = n % 10;
-    if (d > high) {
-      high = d;
-    }
-    if (d < low) {
-      low = d;
-    }
+    if (d > high) high = d;
+    if (d < low) low = d;
     n = Math.floor(n / 10);
   }
   return high - low;
@@ -557,8 +550,7 @@ console.log(digitSpread(364));
 function reverseNumber(n) {
   let reversed = 0;
   while (n > 0) {
-    let lastDigit = n % 10;
-    reversed = reversed * 10 + lastDigit; // Shift left and add the digit
+    reversed = reversed * 10 + (n % 10);
     n = Math.floor(n / 10);
   }
   return reversed;
@@ -604,7 +596,6 @@ function toBinary(n) {
   }
   return result;
 }
-
 console.log(toBinary(11));
 // EXAMPLE 1:  toBinary(11)  ->  "1011"
 // EXAMPLE 2:  toBinary(8)   ->  "1000"
@@ -615,7 +606,7 @@ console.log(toBinary(11));
 // Hint: loop i = 1 upward while i * i <= n; the answer is the last i that fit.
 
 function mySqrt(n) {
-  i = 1;
+  let i = 1;
   while (i * i <= n) {
     i++;
   }
@@ -631,22 +622,17 @@ console.log(mySqrt(37));
 // Hint: loop i = 1 upward; if i*i === n -> true; if i*i > n -> false, stop.
 
 function isPerfectSquare(n) {
-  let isPerfect = false;
-  for (i = 1; i <= n; i++) {
-    console.log(i);
+  i = 1;
+  while (i * i <= n) {
     if (i * i === n) {
-      console.log("this is true");
-      isPerfect = true;
-      break;
-    } else if (i * i > n) {
-      isPerfect = false;
-      break;
+      return true;
     }
+    i++;
   }
-  return isPerfect;
+  return false;
 }
 
-console.log(isPerfectSquare(80));
+console.log(isPerfectSquare(81));
 // EXAMPLE 1:  isPerfectSquare(81)   ->  true   (9×9)
 // EXAMPLE 2:  isPerfectSquare(50)   ->  false
 // EXAMPLE 3:  isPerfectSquare(100)  ->  true   (10×10)
